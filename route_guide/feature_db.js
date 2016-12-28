@@ -7,8 +7,9 @@
 const hl = require('highland')
 const JSONStream = require('JSONStream')
 const _ = require('lodash')
-const BB = require('bluebird')
-const fs = BB.promisifyAll(require('fs'))
+const pify = require('pify')
+const fs = require('fs')
+const pfs = pify(fs)
 
 /**
  * Get a feature object at the given point, or creates one if it does not exist.
@@ -57,7 +58,7 @@ async function getNote (key) {
 }
 
 async function putNote (key, value) {
-  const file = await fs.readFileAsync('route_guide_db_notes.json', 'utf8')
+  const file = await pfs.readFile('route_guide_db_notes.json', 'utf8')
   let all = file ? JSON.parse(file) : []
   if (!Array.isArray(all)) {
     console.warn('notes file is not an array')
@@ -71,7 +72,7 @@ async function putNote (key, value) {
     all.push(data)
   }
   const str = JSON.stringify(all)
-  await fs.writeFileAsync('route_guide_db_notes.json', str)
+  await pfs.writeFile('route_guide_db_notes.json', str)
   return value
 }
 

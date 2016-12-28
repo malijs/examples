@@ -2,9 +2,11 @@ const path = require('path')
 const hl = require('highland')
 const _ = require('lodash')
 const Mali = require('mali')
-const BB = require('bluebird')
-const fs = BB.promisifyAll(require('fs'))
+const pify = require('pify')
+const fs = pify(require('fs'))
 const logger = require('mali-logger')
+const asCallback = require('ascallback')
+const pFinally = require('p-finally')
 
 const db = require('./feature_db')
 const { getDistance, pointKey } = require('./route_utils')
@@ -76,7 +78,7 @@ async function statsMapper (point) {
 
 // to be used because we don't have highland asyncWrapper
 function statsMappedCb (point, fn) {
-  BB.resolve(statsMapper(point)).asCallback(fn)
+  asCallback(Promise.resolve(statsMapper(point)), fn)
 }
 
 /**
@@ -152,7 +154,7 @@ async function handleNote (ctx, note) {
 }
 
 function handleNoteCb (ctx, note, fn) {
-  BB.resolve(handleNote(ctx, note)).asCallback(fn)
+  asCallback(Promise.resolve(handleNote(ctx, note)), fn)
 }
 
 /**
@@ -175,7 +177,7 @@ async function routeChat (ctx) {
 
 let app
 function main () {
-  fs.truncateAsync('route_guide_db_notes.json', 0).then(() => {
+  fs.truncate('route_guide_db_notes.json', 0).then(() => {
     app = new Mali(PROTO_PATH, 'RouteGuide')
     app.use(logger())
     app.use({
@@ -194,9 +196,11 @@ function shutdown (err) {
     console.error(err)
   }
 
-  fs.truncateAsync('route_guide_db_notes.json', 0)
+  const p = fs
+  .truncate('route_guide_db_notes.json', 0)
   .then(app.close())
-  .finally(() => process.exit())
+
+  pFinally(p, () => process.exit())
 }
 
 process.on('uncaughtException', shutdown)

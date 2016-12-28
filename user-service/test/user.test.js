@@ -25,7 +25,7 @@ test('get existing user', async t => {
 test('get all users', async t => {
   const nusers = users.length
   t.plan(nusers + 1)
-  const call = await client.listUsers()
+  const call = client.listUsers()
   let counter = 0
   call.on('data', (data) => {
     const u = new User(data)
