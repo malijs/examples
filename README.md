@@ -17,7 +17,7 @@ With dynamic we create a server from protocol buffer definition file.
 With static we create the server from pre-generated Node.js code.
 The client is unchanged from the gRPC client sample code.
 
-##### Run the server
+#### Run the server
 
 ```sh
 $ # from this directory
@@ -26,7 +26,7 @@ $ # OR
 $ node ./hello_world_static/greeter_server.js
 ```
 
-##### Run the client
+#### Run the client
 
 ```sh
 $ # from this directory
@@ -50,14 +50,14 @@ a clean slate.
 
 The client is unchanged from the gRPC client sample code.
 
-##### Run the server
+#### Run the server
 
 ```sh
 $ # from within route_guide directory
 $ node ./server.js
 ```
 
-##### Run the client
+#### Run the client
 
 ```sh
 $ # from this directory
