@@ -18,13 +18,27 @@
     "lodash": "^4.17.0",
     "mali": "^0.0.2",
     "mali-logger": "^0.1.0",
-    "minimist": "^1.2.0"
+    "mali-tojson": "^0.1.0",
+    "minimist": "^1.2.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
+    "async-to-gen": "^1.2.0",
+    "ava": "^0.17.0",
     "babel-eslint": "^7.1.1",
+    "grpc-caller": "^0.1.0",
+    "sprom": "^2.1.0",
     "standard": "^8.5.0"
   },
   "standard": {
     "parser": "babel-eslint"
+  },
+  "scripts": {
+    "test-user": "ava ./user-service/test/*.test.js -v"
+  },
+  "ava": {
+    "require": [
+      "async-to-gen/register"
+    ]
   }
 }

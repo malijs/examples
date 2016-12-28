@@ -63,3 +63,26 @@ $ node ./server.js
 $ # from this directory
 $ node ./route_guide/route_guide_client.js --db_path=./route_guide/route_guide_db.json
 ```
+
+### User service
+
+A simple "User" service that demonstrates usage of [logger](https://github.com/malijs/logger)
+and [logger](https://github.com/malijs/tojson)[toJSON] middleware. As well since
+currently Protocol Buffers (and therefore gRPC) doesn't support serializing variable
+JSON data (the user "metadata" field in this case), this example shows how to serialize
+the property by converting it to bytes. This is not the most efficient solution but
+the best we can do right now.
+
+#### Run the server
+
+```sh
+$ # from within user-service directory
+$ node ./server.js
+```
+
+#### Run the tests for the service
+
+```sh
+$ # from this directory
+$ npm run test-user
+```

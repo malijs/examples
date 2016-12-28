@@ -1,0 +1,73 @@
+[{
+  "id": "1d78202b-23cf-4d1e-92ac-2d2f76278a7d",
+  "email": "danderson0@fastcompany.com",
+  "password": "JldKZO5Mqp3m",
+  "dateOfBirth": "1994-05-12T22:15:42Z",
+  "metadata": {
+    "foo": "bar",
+    "active": true
+  }
+}, {
+  "id": "83219b96-bc2f-477e-92b5-0f54459c471c",
+  "email": "pbennett1@nifty.com",
+  "password": "wLhZWdkTeFe",
+  "dateOfBirth": "1999-12-16T02:41:19Z",
+  "metadata": {
+    "age": 20,
+    "flag": "something"
+  }
+}, {
+  "id": "a3a0b364-cce2-4451-ac81-301c46cedba4",
+  "email": "jgilbert2@domainmarket.com",
+  "password": "CeWqV0q0j",
+  "dateOfBirth": "1999-09-03T16:14:29Z"
+}, {
+  "id": "a4523882-e052-4e4a-8129-7952f9878dbb",
+  "email": "rflores3@ifeng.com",
+  "password": "fhu55UIeQu80",
+  "dateOfBirth": "1974-04-17T20:37:33Z",
+  "metadata": {
+    "company": "ACME Inc"
+  }
+}, {
+  "id": "70b01689-66fd-4c71-b250-b3ffa758fc8b",
+  "email": "syoung4@seesaa.net",
+  "password": "wh34ls0Y",
+  "dateOfBirth": "1980-09-29T02:40:01Z"
+}, {
+  "id": "2563eef4-a801-44f8-a0f9-8d30b0db2115",
+  "email": "troberts5@so-net.ne.jp",
+  "password": "sZBhJUjd62g9",
+  "dateOfBirth": "1988-02-16T12:22:50Z",
+  "metadata": {
+    "token": "86a08c9c-fad3-4e58-bacf-54f1d94aafc5"
+  }
+}, {
+  "id": "b6d377b8-d0c7-4591-b955-c84338385689",
+  "email": "sclark6@google.com.au",
+  "password": "kgYSq6",
+  "dateOfBirth": "1999-06-05T23:20:02Z"
+}, {
+  "id": "e14a3d80-f347-437d-a9e7-f00bdd1d196d",
+  "email": "cwheeler7@goo.gl",
+  "password": "DHrQL2sXEwA",
+  "dateOfBirth": "1971-12-08T08:43:45Z",
+  "metadata": {
+    "likes": ["movies", "music"]
+  }
+}, {
+  "id": "5af03282-d112-4f71-ad19-6b8fae5c6803",
+  "email": "vbryant8@economist.com",
+  "password": "ihBIRr",
+  "dateOfBirth": "1996-07-01T20:08:29Z"
+}, {
+  "id": "5fe3cbbc-ed70-40b0-88f4-ed17173ea28b",
+  "email": "khamilton9@gnu.org",
+  "password": "Tk7CtJH",
+  "dateOfBirth": "1984-11-14T05:07:04Z"
+}, {
+  "id": "00bb3792-0244-4008-8aa8-2809a8104c10",
+  "email": "shuntera@nps.gov",
+  "password": "EtkJByv2",
+  "dateOfBirth": "1978-06-28T18:37:39Z"
+}]
