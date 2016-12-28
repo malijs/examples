@@ -10,7 +10,7 @@ $ npm install
 
 * [Hello World](#helloworld) - The stock gRPC Hello World example
 * [Route Guide](#routeguide) - The stock gRPC Route Guide tutorial
-* [User Service](#userserice) - Sample "User" service
+* [User Service](#userservice) - Sample "User" service
 
 ###<a name="helloworld">Hello World</a>
 
