@@ -8,7 +8,7 @@ $ npm install
 
 ## Examples
 
-#### Hello World
+### Hello World
 
 The stock [gRPC Hellow World example](https://github.com/grpc/grpc/tree/master/examples/node)
 converted to use Mali for server.
@@ -35,7 +35,7 @@ $ # OR
 $ node ./hello_world_static/greeter_client.js
 ```
 
-#### Route Guide
+### Route Guide
 
 The stock [gRPC Route Guide tutorial](http://www.grpc.io/docs/tutorials/basic/node.html)
 converted to use Mali for server with some notable changes:
