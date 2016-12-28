@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package User;
+
+service UserService {
+  rpc GetUser (Id) returns (User) {}
+  rpc ListUsers (Empty) returns (stream User) {}
+  rpc CreateUser (NewUser) returns (User) {}
+}
+
+message User {
+  string id = 1;
+  string email = 2;
+  string dateOfBirth = 3;
+  bytes metadata = 4;
+}
+
+message NewUser {
+  string email = 1;
+  string dateOfBirth = 2;
+  string password = 3;
+  bytes metadata = 4;
+}
+
+message Id {
+  string id = 1;
+}
+
+message Empty {
+}
