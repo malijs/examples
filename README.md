@@ -2,6 +2,8 @@
 
 A repository containing small examples to illustrate the use of Mali for creating gRPC applications.
 
+## Installation
+
 ```sh
 $ npm install
 ```
