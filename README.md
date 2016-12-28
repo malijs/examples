@@ -8,7 +8,11 @@ $ npm install
 
 ## Examples
 
-### Hello World
+* [Hello World](#helloworld) - The stock gRPC Hello World example
+* [Route Guide](#routeguide) - The stock gRPC Route Guide tutorial
+* [User Service](#userserice) - Sample "User" service
+
+(#helloworld) ### Hello World
 
 The stock [gRPC Hellow World example](https://github.com/grpc/grpc/tree/master/examples/node)
 converted to use Mali for server.
@@ -35,7 +39,7 @@ $ # OR
 $ node ./hello_world_static/greeter_client.js
 ```
 
-### Route Guide
+(#routeguide)### Route Guide
 
 The stock [gRPC Route Guide tutorial](http://www.grpc.io/docs/tutorials/basic/node.html)
 converted to use Mali for server with some notable changes:
@@ -64,7 +68,7 @@ $ # from this directory
 $ node ./route_guide/route_guide_client.js --db_path=./route_guide/route_guide_db.json
 ```
 
-### User service
+(#userservice)### User service
 
 A simple "User" service that demonstrates usage of [logger](https://github.com/malijs/logger)
 and [tojson](https://github.com/malijs/tojson) middleware. As well since
