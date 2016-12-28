@@ -68,7 +68,7 @@ $ # from this directory
 $ node ./route_guide/route_guide_client.js --db_path=./route_guide/route_guide_db.json
 ```
 
-###<a name="userservice>User service</a>
+###<a name="userservice">User service</a>
 
 A simple "User" service that demonstrates usage of [logger](https://github.com/malijs/logger)
 and [tojson](https://github.com/malijs/tojson) middleware. As well since
