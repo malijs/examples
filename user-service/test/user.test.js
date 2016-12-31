@@ -21,6 +21,16 @@ test('fail with wrong auth info', async t => {
   t.is(md.code, 'INVALID_APIKEY')
 })
 
+test('fail with wrong api key', async t => {
+  t.plan(5)
+  const err = await t.throws(client.getUser({ id: '1d78202b-23cf-4d1e-92ac-2d2f76278a7d' }, { Authorization: 'apikey 654322' }))
+  t.truthy(err)
+  t.is(err.message, 'Not Authorized')
+  const md = err.metadata.getMap()
+  t.is(md.type, 'AUTH')
+  t.is(md.code, 'INVALID_APIKEY')
+})
+
 test('get existing user', async t => {
   t.plan(2)
   const response = await client.getUser({ id: '1d78202b-23cf-4d1e-92ac-2d2f76278a7d' }, { Authorization: 'apikey 654321' })
