@@ -72,12 +72,11 @@ $ node ./route_guide/route_guide_client.js --db_path=./route_guide/route_guide_d
 
 ###<a name="userservice">User service</a>
 
-A simple "User" service that demonstrates usage of [logger](https://github.com/malijs/logger)
-and [tojson](https://github.com/malijs/tojson) middleware. As well since
-currently Protocol Buffers (and therefore gRPC) doesn't support serializing variable
-JSON data (the user "metadata" field in this case), this example shows how to serialize
-the property by converting it to bytes. This is not the most efficient solution but
-the best we can do right now.
+A simple "User" service that demonstrates usage of [apikey](https://github.com/malijs/apikey), [logger](https://github.com/malijs/logger) and [tojson](https://github.com/malijs/tojson)
+middleware. As well since currently Protocol Buffers (and therefore gRPC) doesn't support
+serializing variable JSON data (the user "metadata" field in this case),
+this example shows how to serialize the property by converting it to bytes.
+This is not the most efficient solution but the best we can do right now.
 
 #### Run the server
 

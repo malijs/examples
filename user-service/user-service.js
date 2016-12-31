@@ -2,6 +2,8 @@ const path = require('path')
 const hl = require('highland')
 const Mali = require('mali')
 
+const createError = require('create-grpc-error')
+const apikey = require('mali-apikey')
 const logger = require('mali-logger')
 const toJSON = require('mali-tojson')
 const User = require('./user')
@@ -29,7 +31,12 @@ let app
 function main () {
   app = new Mali(PROTO_PATH, 'UserService')
 
+  const apiKeyErrorMetadata = { type: 'AUTH', code: 'INVALID_APIKEY' }
   app.use(logger())
+  app.use(apikey({ error: { metadata: apiKeyErrorMetadata } }, async (key, ctx, next) => {
+    if (key !== '654321') throw createError('Not Authorized', apiKeyErrorMetadata)
+    await next()
+  }))
   app.use(toJSON)
   app.use({
     getUser,
