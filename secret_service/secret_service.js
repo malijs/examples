@@ -3,6 +3,9 @@ const hl = require('highland')
 const asCallback = require('ascallback')
 const Mali = require('mali')
 const logger = require('mali-logger')
+const pify = require('pify')
+const fs = require('fs')
+const truncate = pify(fs.truncate)
 
 const encrypt = require('./encrpyt')
 const save = require('./save')
@@ -44,7 +47,6 @@ async function processSecrets (ctx) {
       .collect()
       .toCallback((err, r) => {
         if (err) {
-          console.log('done with error: ', err.message)
           return reject(err)
         }
         const success = r ? r.length : 0
@@ -71,6 +73,7 @@ async function shutdown (err) {
     console.error(err)
   }
 
+  await truncate('secret_db_write.json', 0)
   await app.close()
   process.exit()
 }
