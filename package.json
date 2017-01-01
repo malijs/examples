@@ -25,7 +25,6 @@
     "mali-logger": "^0.1.0",
     "mali-tojson": "^0.1.0",
     "minimist": "^1.2.0",
-    "on-finished": "^2.3.0",
     "p-finally": "^1.0.0",
     "pify": "^2.3.0",
     "uuid": "^3.0.1"
@@ -42,7 +41,7 @@
     "parser": "babel-eslint"
   },
   "scripts": {
-    "test-user": "ava ./user-service/test/*.test.js -v"
+    "test-user": "ava user_service/test/*.test.js -v"
   },
   "ava": {
     "require": [

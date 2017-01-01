@@ -13,6 +13,7 @@ $ npm install
 * [Hello World](#helloworld) - The stock gRPC Hello World example
 * [Route Guide](#routeguide) - The stock gRPC Route Guide tutorial
 * [User Service](#userservice) - Sample "User" service
+* [Secret Service](#secretservice) - Process stream of "secret" requests, and consume errors
 
 ###<a name="helloworld">Hello World</a>
 
@@ -90,4 +91,23 @@ $ node ./server.js
 ```sh
 $ # from this directory
 $ npm run test-user
+```
+
+###<a name="secretservice">Secret service</a>
+
+A simple service that asynchronously processes a stream of requests and collects
+the errors and returns the number of succeeded and the failed details.
+
+#### Run the server
+
+```sh
+$ # from within secret_service directory
+$ node ./server.js
+```
+
+#### Run the client
+
+```sh
+$ # from within secret_service directory
+$ node ./client.js
 ```
