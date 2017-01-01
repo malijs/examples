@@ -81,7 +81,7 @@ This is not the most efficient solution but the best we can do right now.
 #### Run the server
 
 ```sh
-$ # from within user-service directory
+$ # from within user_service directory
 $ node ./server.js
 ```
 

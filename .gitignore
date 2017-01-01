@@ -37,3 +37,4 @@ jspm_packages
 .node_repl_history
 
 user_db_write.json
+secret_db_write.json
