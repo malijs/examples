@@ -19,7 +19,7 @@ async function processSecretAsync (id, secret) {
   return r
 }
 
-// to be used because we don't have highland asyncWrapper
+// to be used because we don't have highland async wrapper
 function processSecretCb (data, fn) {
   asCallback(processSecretAsync(data.id, data.secret), (err, r) => {
     if (err) err.id = data.id
@@ -39,17 +39,12 @@ async function processSecrets (ctx) {
         if (err.id) {
           failed.push({ id: err.id, message: err.message })
           push(null)
-        } else {
-          push(err)
-        }
+        } else push(err)
       })
       .compact()
-      .collect()
-      .toCallback((err, r) => {
-        if (err) {
-          return reject(err)
-        }
-        const success = r ? r.length : 0
+      .reduce(m => ++m, 0)
+      .toCallback((err, success) => {
+        if (err) return reject(err)
         ctx.res = { success, failed }
         resolve()
       })
