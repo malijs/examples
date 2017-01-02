@@ -64,9 +64,7 @@ function main () {
 }
 
 async function shutdown (err) {
-  if (err) {
-    console.error(err)
-  }
+  if (err) console.error(err)
 
   await truncate('secret_db_write.json', 0)
   await app.close()

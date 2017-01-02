@@ -11,6 +11,10 @@ const User = require('./user')
 const PROTO_PATH = path.resolve(__dirname, '../protos/user.proto')
 const HOSTPORT = '0.0.0.0:50051'
 
+let app
+const API_KEY = '654321'
+const apiKeyErrorMetadata = { type: 'AUTH', code: 'INVALID_APIKEY' }
+
 async function getUser (ctx) {
   const user = await User.findById(ctx.req.id)
   ctx.res = user
@@ -26,18 +30,18 @@ async function createUser (ctx) {
   ctx.res = await user.save()
 }
 
-let app
+async function checkAPIKey (key, ctx, next) {
+  if (key !== API_KEY) throw createError('Not Authorized', apiKeyErrorMetadata)
+  await next()
+}
 
 function main () {
   app = new Mali(PROTO_PATH, 'UserService')
 
-  const apiKeyErrorMetadata = { type: 'AUTH', code: 'INVALID_APIKEY' }
   app.use(logger())
-  app.use(apikey({ error: { metadata: apiKeyErrorMetadata } }, async (key, ctx, next) => {
-    if (key !== '654321') throw createError('Not Authorized', apiKeyErrorMetadata)
-    await next()
-  }))
+  app.use(apikey({ error: { metadata: apiKeyErrorMetadata } }, checkAPIKey))
   app.use(toJSON)
+
   app.use({
     getUser,
     listUsers,
@@ -48,14 +52,10 @@ function main () {
   console.log(`User service running @ ${HOSTPORT}`)
 }
 
-function shutdown (err) {
-  if (err) {
-    console.error(err)
-  }
-
-  app.close().then(() => {
-    process.exit()
-  })
+async function shutdown (err) {
+  if (err) console.error(err)
+  await app.close()
+  process.exit()
 }
 
 process.on('uncaughtException', shutdown)
