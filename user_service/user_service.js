@@ -40,7 +40,7 @@ function main () {
 
   app.use(logger())
   app.use(apikey({ error: { metadata: apiKeyErrorMetadata } }, checkAPIKey))
-  app.use(toJSON)
+  app.use(toJSON())
 
   app.use({
     getUser,

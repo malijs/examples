@@ -23,7 +23,7 @@
     "mali": "^0.1.0",
     "mali-apikey": "^0.1.0",
     "mali-logger": "^0.1.0",
-    "mali-tojson": "^0.1.0",
+    "mali-tojson": "^0.2.0",
     "minimist": "^1.2.0",
     "p-finally": "^1.0.0",
     "pify": "^2.3.0",
