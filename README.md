@@ -17,7 +17,7 @@ $ npm install
 
 ### <a name="helloworld">Hello World</a>
 
-The stock [gRPC Hellow World example](https://github.com/grpc/grpc/tree/master/examples/node)
+The stock [gRPC Hello World example](https://github.com/grpc/grpc/tree/master/examples/node)
 converted to use Mali for server.
 Both dynamic and static code generated examples are provided.
 With dynamic we create a server from protocol buffer definition file.
