@@ -15,7 +15,7 @@ $ npm install
 * [User Service](#userservice) - Sample "User" service
 * [Secret Service](#secretservice) - Process stream of "secret" requests, and consume errors
 
-###<a name="helloworld">Hello World</a>
+### <a name="helloworld">Hello World</a>
 
 The stock [gRPC Hellow World example](https://github.com/grpc/grpc/tree/master/examples/node)
 converted to use Mali for server.
@@ -42,7 +42,7 @@ $ # OR
 $ node ./hello_world_static/greeter_client.js
 ```
 
-###<a name="routeguide">Route Guide</a>
+### <a name="routeguide">Route Guide</a>
 
 The stock [gRPC Route Guide tutorial](http://www.grpc.io/docs/tutorials/basic/node.html)
 converted to use Mali for server with some notable changes:
@@ -71,7 +71,7 @@ $ # from this directory
 $ node ./route_guide/route_guide_client.js --db_path=./route_guide/route_guide_db.json
 ```
 
-###<a name="userservice">User service</a>
+### <a name="userservice">User service</a>
 
 A simple "User" service that demonstrates usage of [apikey](https://github.com/malijs/apikey), [logger](https://github.com/malijs/logger) and [tojson](https://github.com/malijs/tojson)
 middleware. As well since currently Protocol Buffers (and therefore gRPC) doesn't support
@@ -93,7 +93,7 @@ $ # from this directory
 $ npm run test-user
 ```
 
-###<a name="secretservice">Secret service</a>
+### <a name="secretservice">Secret service</a>
 
 A simple service that asynchronously processes a stream of requests and collects
 the errors and returns the number of succeeded and the failed details.

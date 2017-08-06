@@ -20,22 +20,22 @@
     "grpc": "^1.0.1",
     "highland": "^3.0.0-beta.3",
     "lodash": "^4.17.0",
-    "mali": "^0.1.0",
+    "mali": "^0.3.0",
     "mali-apikey": "^0.1.0",
-    "mali-logger": "^0.1.0",
+    "mali-logger": "^0.2.0",
     "mali-tojson": "^0.2.0",
     "minimist": "^1.2.0",
     "p-finally": "^1.0.0",
-    "pify": "^2.3.0",
+    "pify": "^3.0.0",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
     "async-to-gen": "^1.2.0",
-    "ava": "^0.17.0",
+    "ava": "^0.21.0",
     "babel-eslint": "^7.1.1",
     "grpc-caller": "^0.1.0",
     "sprom": "^2.1.0",
-    "standard": "^8.5.0"
+    "standard": "^10.0.0"
   },
   "standard": {
     "parser": "babel-eslint"
