@@ -7,6 +7,7 @@ const fs = pify(require('fs'))
 const logger = require('mali-logger')
 const asCallback = require('ascallback')
 const pFinally = require('p-finally')
+const miss = require('mississippi')
 
 const db = require('./feature_db')
 const { getDistance, pointKey } = require('./route_utils')
@@ -138,23 +139,18 @@ async function recordRoute (ctx) {
   })
 }
 
-async function handleNote (ctx, note) {
+async function handleNode (ctx, note) {
   const key = pointKey(note.location)
   const existing = await db.getNote(key)
-  if (!existing) {
-    return db.putNote(key, note)
+  if (existing) {
+    _.each(existing.value, n => ctx.res.write(n))
   }
 
-  if (!Array.isArray(existing.value)) {
-    existing.value = []
-  }
-
-  _.each(existing.value, n => ctx.res.write(n))
   return db.putNote(key, note)
 }
 
 function handleNoteCb (ctx, note, fn) {
-  asCallback(Promise.resolve(handleNote(ctx, note)), fn)
+  asCallback(handleNode(ctx, note), fn)
 }
 
 /**
@@ -162,20 +158,14 @@ function handleNoteCb (ctx, note, fn) {
  * with a stream of all previous messages at each of those locations.
  */
 async function routeChat (ctx) {
-  // TODO since we don't have Highland.wrapAsync
-  // hack and use Highland.wrapCallback
-  // use map because .each() doesn't work in async series manner
-
   const p = _.partial(handleNoteCb, ctx)
-  const handler = hl.wrapCallback(p)
-
-  hl(ctx.req)
-    .map(handler)
-    .series()
-    .done(() => ctx.res.end())
+  miss.each(ctx.req, p, () => {
+    ctx.res.end()
+  })
 }
 
 let app
+
 function main () {
   fs.truncate('route_guide_db_notes.json', 0).then(() => {
     app = new Mali(PROTO_PATH, 'RouteGuide')
@@ -197,8 +187,8 @@ function shutdown (err) {
   }
 
   const p = fs
-  .truncate('route_guide_db_notes.json', 0)
-  .then(app.close())
+    .truncate('route_guide_db_notes.json', 0)
+    .then(app.close())
 
   pFinally(p, () => process.exit())
 }

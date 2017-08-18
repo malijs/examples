@@ -42,19 +42,12 @@ async function getFeaturesListStream () {
 }
 
 async function getNote (key) {
-  return new Promise((resolve, reject) => {
-    const input = fs.createReadStream('route_guide_db_notes.json')
+  const input = fs.createReadStream('route_guide_db_notes.json')
 
-    hl(input)
-      .through(JSONStream.parse('*'))
-      .find(v => v && v.key === key)
-      .toCallback((err, result) => {
-        if (err) {
-          return reject(err)
-        }
-        resolve(result)
-      })
-  })
+  return hl(input)
+    .through(JSONStream.parse('*'))
+    .find(v => v && v.key === key)
+    .toPromise(Promise)
 }
 
 async function putNote (key, value) {
@@ -72,7 +65,8 @@ async function putNote (key, value) {
     all.push(data)
   }
   const str = JSON.stringify(all)
-  await pfs.writeFile('route_guide_db_notes.json', str)
+  await pfs.writeFile('route_guide_db_notes.json', str, 'utf8')
+
   return value
 }
 

@@ -1,3 +1,36 @@
+/*
+ *
+ * Copyright 2015, Google Inc.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ */
+
 var async = require('async')
 var fs = require('fs')
 var parseArgs = require('minimist')
@@ -5,14 +38,12 @@ var path = require('path')
 var _ = require('lodash')
 var grpc = require('grpc')
 
-var COORD_FACTOR = 1e7
-
-const PROTO_PATH = path.resolve(__dirname, '../protos/route_guide.proto')
-const HOSTPORT = '0.0.0.0:50051'
-
-const routeguide = grpc.load(PROTO_PATH).routeguide
-const client = new routeguide.RouteGuide(HOSTPORT,
+var PROTO_PATH = path.resolve(__dirname, '../protos/route_guide.proto')
+var routeguide = grpc.load(PROTO_PATH).routeguide
+var client = new routeguide.RouteGuide('localhost:50051',
   grpc.credentials.createInsecure())
+
+var COORD_FACTOR = 1e7
 
 /**
  * Run the getFeature demo. Calls getFeature with a point known to have a
@@ -106,13 +137,13 @@ function runRecordRoute (callback) {
       console.log('It took', stats.elapsed_time, 'seconds')
       callback()
     })
-      /**
-       * Constructs a function that asynchronously sends the given point and then
-       * delays sending its callback
-       * @param {number} lat The latitude to send
-       * @param {number} lng The longitude to send
-       * @return {function(function)} The function that sends the point
-       */
+    /**
+     * Constructs a function that asynchronously sends the given point and then
+     * delays sending its callback
+     * @param {number} lat The latitude to send
+     * @param {number} lng The longitude to send
+     * @return {function(function)} The function that sends the point
+     */
     function pointSender (lat, lng) {
       /**
        * Sends the point, then calls the callback after a delay
@@ -193,9 +224,9 @@ function runRouteChat (callback) {
  */
 function main () {
   async.series([
-    runGetFeature,
-    runListFeatures,
-    runRecordRoute,
+    // runGetFeature,
+    // runListFeatures,
+    // runRecordRoute,
     runRouteChat
   ])
 }
