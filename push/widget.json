@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "chance": "guid"
+    },
+    "data": {
+      "type": "string",
+      "maxLength": 30,
+      "minLength":""
+    }
+  },
+  "required": ["id", "data"]
+}
