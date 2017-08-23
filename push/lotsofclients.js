@@ -15,7 +15,7 @@ async function main () {
       const id = chance.guid()
       const data = { id, timestamp: new Date().getTime() }
       const call = await client.syncWidgets(data)
-      call.on('data', (data) => {
+      call.on('data', data => {
         console.log(`client ${id} got widget %j`, data)
       })
     }, delay)
