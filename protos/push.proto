@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package PushExample;
+
+service PushService {
+  rpc SyncWidgets (SyncRequest) returns (stream Widget) {}
+}
+
+message SyncRequest {
+  string id = 1;
+  int32 timestamp = 2;
+}
+
+message Widget {
+  string id = 1;
+  string data = 2;
+}

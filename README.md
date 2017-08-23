@@ -14,6 +14,7 @@ $ npm install
 * [Route Guide](#routeguide) - The stock gRPC Route Guide tutorial
 * [User Service](#userservice) - Sample "User" service
 * [Secret Service](#secretservice) - Process stream of "secret" requests, and consume errors
+* [Push Server](#secretservice) - Push server example
 
 ### <a name="helloworld">Hello World</a>
 
@@ -110,4 +111,29 @@ $ node ./server.js
 ```sh
 $ # from within secret_service directory
 $ node ./client.js
+```
+
+### <a name="secretservice">Push server</a>
+
+GRPC can be used to implement a service that sends updates to all connected clients. This can be achieved using response stream calls. Clients open a stream response connection using `syncWidgets` call, which returns all "updated" widgets since some timestamp. Afterwards as widgets are updated the server sends the updates to all the connected clients. The server abstracts and mocks a simple widget store which can be either another service (ie widget service) or a database. Similarly it abstracts and mocks an update notification mechanism that notifies it of updated widgets (for example incoming messages from AMQP or some other messanging system).
+
+#### Run the server
+
+```sh
+$ # from within examples directory
+$ node ./push/server.js
+```
+
+#### Run the client
+
+```sh
+$ # from within examples directory
+$ node ./push/client.js
+```
+
+#### Run an app that makes lots of concurrent client requests
+
+```sh
+$ # from within examples directory
+$ node ./push/lotsofclients.js
 ```
