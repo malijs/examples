@@ -5,7 +5,7 @@ const Mali = require('mali')
 const logger = require('mali-logger')
 const first = require('ee-first')
 
-const widgetSource = require('./widget_source')
+const { getUpdatedWidgets } = require('./widget_source')
 const { WidgetUpdater } = require('./update_source')
 
 const PROTO_PATH = path.resolve(__dirname, '../protos/push.proto')
@@ -44,7 +44,7 @@ async function syncWidgets (ctx) {
   const req = ctx.req
   const id = req.id
   console.log(`client ${id} connected`)
-  const widgets = await widgetSource.getUpdatedWidgets(ctx.since)
+  const widgets = await getUpdatedWidgets(ctx.since)
   clients[id] = ctx.call
   ctx.res = hl(widgets).each(w => writeWidget(id, w))
   disconnectHandler(req, ctx.call)
@@ -52,7 +52,6 @@ async function syncWidgets (ctx) {
 
 /**
  * Handler of widget update message
- * @param {Object} widget
  */
 function updateHandler (widget) {
   const ids = _.keys(clients)
