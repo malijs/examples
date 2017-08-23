@@ -12,7 +12,7 @@ async function main () {
   const data = { id, timestamp: new Date().getTime() }
   const call = await client.syncWidgets(data)
   call.on('data', (data) => {
-    console.log(`client ${id} got data %j`, data)
+    console.log(`client ${id} got widget %j`, data)
   })
 }
 
