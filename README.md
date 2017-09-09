@@ -115,7 +115,7 @@ $ node ./client.js
 
 ### <a name="push">Push server</a>
 
-GRPC can be used to implement a service that sends updates to all connected clients. This can be achieved using response stream calls. In this contrieved example clients open a stream response connection using `syncWidgets` call, which returns all "updated" widgets since some timestamp. Afterwards as widgets are updated the server sends the updates to all the connected clients. The server abstracts and mocks a simple widget store which can be either another service (ie widget service) or a database. Similarly it abstracts and mocks an update notification mechanism that notifies it of updated widgets (for example incoming messages from AMQP or some other messanging system).
+gRPC can be used to implement a service that sends updates to all connected clients. This can be achieved using response stream calls. In this contrieved example clients open a stream response connection using `syncWidgets` call, which returns all "updated" widgets since some timestamp. Afterwards as widgets are updated the server sends the updates to all the connected clients. The server abstracts and mocks a simple widget store which can be either another service (ie widget service) or a database. Similarly it abstracts and mocks an update notification mechanism that notifies it of updated widgets (for example incoming messages from AMQP or some other messanging system).
 
 #### Run the server
 
