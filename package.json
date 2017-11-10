@@ -34,14 +34,10 @@
   },
   "devDependencies": {
     "async-to-gen": "^1.2.0",
-    "ava": "^0.22.0",
-    "babel-eslint": "^7.1.1",
-    "grpc-caller": "^0.2.0",
+    "ava": "^0.23.0",
+    "grpc-caller": "^0.3.0",
     "sprom": "^2.1.0",
     "standard": "^10.0.0"
-  },
-  "standard": {
-    "parser": "babel-eslint"
   },
   "scripts": {
     "test-user": "ava user_service/test/*.test.js -v"
