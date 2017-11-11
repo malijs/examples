@@ -224,9 +224,9 @@ function runRouteChat (callback) {
  */
 function main () {
   async.series([
-    // runGetFeature,
-    // runListFeatures,
-    // runRecordRoute,
+    runGetFeature,
+    runListFeatures,
+    runRecordRoute,
     runRouteChat
   ])
 }
