@@ -1,17 +1,26 @@
 const path = require('path')
-const _ = require('lodash')
 const hl = require('highland')
 const Mali = require('mali')
+const miss = require('mississippi')
 
 const PROTO_PATH = path.resolve(__dirname, '../protos/errorexample.proto')
 const HOSTPORT = '0.0.0.0:50051'
 
-async function getWidget (ctx) {
+async function getWidget2 (ctx) {
   const { id } = ctx.req
   if (id && id % 2 === 0) {
     throw new Error('boom!')
   }
   ctx.res = { name: `w${id}` }
+}
+
+async function getWidget (ctx) {
+  const { id } = ctx.req
+  if (id && id % 2 === 0) {
+    ctx.res = new Error('boom!')
+  } else {
+    ctx.res = { name: `w${id}` }
+  }
 }
 
 async function listWidgets (ctx) {
@@ -50,12 +59,32 @@ async function createWidgets (ctx) {
   })
 }
 
+async function syncWidgets (ctx) {
+  let counter = 0
+  miss.each(ctx.req, (d, next) => {
+    counter++
+    if (d.widget) {
+      console.log('data: %s', d.widget.name)
+      ctx.res.write({ widget: { name: d.widget.name.toUpperCase() } })
+    } else if (d.error) {
+      console.error('Error: %s', d.error.message)
+    }
+    if (counter % 4 === 0) {
+      ctx.res.write({ error: { message: `Boom ${counter}!` } })
+    }
+    next()
+  }, () => {
+    ctx.res.end()
+  })
+}
+
 function main () {
   const app = new Mali(PROTO_PATH)
   app.use({
     getWidget,
     listWidgets,
-    createWidgets
+    createWidgets,
+    syncWidgets
   })
   app.start(HOSTPORT)
   console.log(`Greeter service running @ ${HOSTPORT}`)

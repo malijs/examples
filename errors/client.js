@@ -160,9 +160,9 @@ function main () {
     listWidgets,
     listWidgetsError,
     createWidgets,
-    createWidgetsError
-    // syncWidgets,
-    // syncWidgetsError
+    createWidgetsError,
+    syncWidgets,
+    syncWidgetsError
   ], () => {
     console.log('done!')
   })
