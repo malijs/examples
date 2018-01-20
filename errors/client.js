@@ -73,6 +73,7 @@ function createWidgets (fn) {
 
   widgets.forEach(w => call.write(w))
   call.end()
+  fn()
 }
 
 function createWidgetsError (fn) {
@@ -159,9 +160,9 @@ function main () {
     listWidgets,
     listWidgetsError,
     createWidgets,
-    createWidgetsError,
-    syncWidgets,
-    syncWidgetsError
+    createWidgetsError
+    // syncWidgets,
+    // syncWidgetsError
   ], () => {
     console.log('done!')
   })

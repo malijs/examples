@@ -8,18 +8,18 @@ const HOSTPORT = '0.0.0.0:50051'
 const loaded = grpc.load(PROTO_PATH)
 const example = loaded.ErrorExample
 
-const widgets = [
-  { name: 'w1' },
-  { name: 'w2' },
-  { name: 'w3' },
-  new Error('boom!'),
-  { name: 'w4' },
-  new Error('Another boom!'),
-  { name: 'w5' },
-  { name: 'w6' }
-]
-
 function listWidgets (call) {
+  const widgets = [
+    { name: 'w1' },
+    { name: 'w2' },
+    { name: 'w3' },
+    new Error('boom!'),
+    { name: 'w4' },
+    new Error('Another boom!'),
+    { name: 'w5' },
+    { name: 'w6' }
+  ]
+
   _.each(widgets, w => {
     if (w instanceof Error) {
       const { message } = w
