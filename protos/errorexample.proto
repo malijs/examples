@@ -6,6 +6,7 @@ import "status.proto";
 
 service SampleService {
   rpc GetWidget (WidgetRequest) returns (Widget) {}
+  rpc GetWidget2 (WidgetRequest) returns (Widget) {}
   rpc ListWidgets (WidgetRequest) returns (stream WidgetStreamObject) {}
   rpc CreateWidgets (stream Widget) returns (WidgetResult) {}
   rpc SyncWidgets (stream WidgetStreamObject) returns (stream WidgetStreamObject) {}

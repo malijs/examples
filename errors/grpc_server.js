@@ -73,6 +73,7 @@ function main () {
   const server = new grpc.Server()
   server.addService(example.SampleService.service, {
     getWidget,
+    getWidget2: getWidget,
     listWidgets,
     createWidgets,
     syncWidgets

@@ -6,7 +6,7 @@ const miss = require('mississippi')
 const PROTO_PATH = path.resolve(__dirname, '../protos/errorexample.proto')
 const HOSTPORT = '0.0.0.0:50051'
 
-async function getWidget2 (ctx) {
+async function getWidget (ctx) {
   const { id } = ctx.req
   if (id && id % 2 === 0) {
     throw new Error('boom!')
@@ -14,7 +14,7 @@ async function getWidget2 (ctx) {
   ctx.res = { name: `w${id}` }
 }
 
-async function getWidget (ctx) {
+async function getWidget2 (ctx) {
   const { id } = ctx.req
   if (id && id % 2 === 0) {
     ctx.res = new Error('boom!')
@@ -82,6 +82,7 @@ function main () {
   const app = new Mali(PROTO_PATH)
   app.use({
     getWidget,
+    getWidget2,
     listWidgets,
     createWidgets,
     syncWidgets

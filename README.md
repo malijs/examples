@@ -15,6 +15,7 @@ $ npm install
 * [User Service](#userservice) - Sample "User" service
 * [Secret Service](#secretservice) - Process stream of "secret" requests, and consume errors
 * [Push Server](#push) - Push server example
+* [Errors Example](#errors) - Example demonstrating sending errors to client
 
 ### <a name="helloworld">Hello World</a>
 
@@ -136,4 +137,33 @@ $ node ./push/client.js
 ```sh
 $ # from within examples directory
 $ node ./push/lotsofclients.js
+```
+
+### <a name="errors">Errors example</a>
+
+Demonstrates different ways of comminicating erros to client. [Read more](errors/README.md).
+
+#### Run the server
+
+To run the traditional gRPC implementation:
+
+```sh
+$ # from within examples directory
+$ node ./errors/grpc_server.js
+```
+
+Mali implementation:
+
+```sh
+$ # from within examples directory
+$ node ./errors/mali_server.js
+```
+
+#### Run the client
+
+Experiment with different calls to explore.
+
+```sh
+$ # from within examples directory
+$ node ./errors/client.js
 ```
