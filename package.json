@@ -21,7 +21,7 @@
     "highland": "^3.0.0-beta.3",
     "json-schema-faker": "^0.5.0-rc10",
     "lodash": "^4.17.0",
-    "mali": "^0.6.1",
+    "mali": "^0.7.0",
     "mali-apikey": "^0.1.0",
     "mali-logger": "^0.2.1",
     "mali-tojson": "^0.2.0",
@@ -35,7 +35,7 @@
   "devDependencies": {
     "async-to-gen": "^1.2.0",
     "ava": "^0.24.0",
-    "grpc-caller": "^0.3.1",
+    "grpc-caller": "^0.4.0",
     "sprom": "^3.0.0",
     "standard": "^10.0.0"
   },

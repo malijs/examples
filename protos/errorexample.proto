@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package ErrorExample;
+
+import "status.proto";
+
+service SampleService {
+  rpc GetWidget (WidgetRequest) returns (Widget) {}
+  rpc GetWidget2 (WidgetRequest) returns (Widget) {}
+  rpc ListWidgets (WidgetRequest) returns (stream WidgetStreamObject) {}
+  rpc CreateWidgets (stream Widget) returns (WidgetResult) {}
+  rpc SyncWidgets (stream WidgetStreamObject) returns (stream WidgetStreamObject) {}
+}
+
+message Widget {
+  string name = 1;
+}
+
+message WidgetStreamObject {
+  Widget widget = 1;
+  google.rpc.Status error = 2;
+}
+
+message WidgetRequest {
+  int32 id = 1;
+}
+
+message WidgetResult {
+  int32 created = 1;
+}
