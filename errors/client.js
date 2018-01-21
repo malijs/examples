@@ -133,11 +133,11 @@ function syncWidgetsError (fn) {
   })
   const widgets = [
     { name: 'w1' },
-    new Error('Boom 1'),
+    new Error('Client Boom 1'),
     { name: 'w2' },
     { name: 'w3' },
     { name: 'w4' },
-    new Error('Boom 1'),
+    new Error('Client Boom 2'),
     { name: 'w5' }
   ]
 

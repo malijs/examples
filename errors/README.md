@@ -93,7 +93,7 @@ async function getWidget (ctx) {
 
 ## REQUEST STREAM
 
-Similarly with request stream in gRPC implementation we use the callback to respond either with a response or an error:
+Similarly with request stream in gRPC server implementation we use the callback to respond either with a response or an error:
 
 ```js
 function createWidgets (call, fn) {
@@ -151,5 +151,181 @@ Alternatively, similar to `UNARY` calls, we can resolve with an error to explici
 
 ## RESPONSE STREAM
 
+With response stream calls we can `emit` an error to the response stream. However this would cause a stop to the request. Sometimes this is not desireble if we can detect and control errorous conditions and want to contirnue streaming. In such scenarios we need to setup are responses to include error data. Reviewing our call definition:
 
+```protobuf
+rpc ListWidgets (WidgetRequest) returns (stream WidgetStreamObject) {}
+```
 
+and our response type:
+
+```
+message WidgetStreamObject {
+  Widget widget = 1;
+  google.rpc.Status error = 2;
+}
+```
+
+If there was an error in processing the request on a perticular instance of the stream and we want to send that to the client but continue on serving the rest of the request, we can just set the `error` property of the payload. Here we use Google API's [RPC status](https://github.com/googleapis/googleapis/blob/master/google/rpc/status.proto) proto definition to define the error field.
+
+Our gRPC server implementation can look something like the following:
+
+```js
+function listWidgets (call) {
+  const widgets = [
+    { name: 'w1' },
+    { name: 'w2' },
+    { name: 'w3' },
+    new Error('boom!'),
+    { name: 'w4' },
+    new Error('Another boom!'),
+    { name: 'w5' },
+    { name: 'w6' }
+  ]
+
+  _.each(widgets, w => {
+    if (w instanceof Error) {
+      const { message } = w
+      call.write({ error: { message } })
+    } else {
+      call.write({ widget: w })
+    }
+  })
+  call.end()
+}
+```
+
+On client:
+
+```js
+const call = client.listWidgets({ id: 8 })
+
+call.on('data', d => {
+  if (d.widget) {
+    console.log(d.widget)
+  } else if (d.error) {
+    console.log('Data error: %s', d.error.message)
+  }
+})
+
+call.on('error', err => {
+  console.error('Client error: %s', err)
+})
+
+call.on('end', () => console.log('done!'))
+```
+
+With Mali we set the response to a stream that's piped to the client. We can use stream utilities such as [Highland.js](http://highlandjs.org/), or others to work with the stream data.
+
+```js
+async function listWidgets (ctx) {
+  const widgets = [
+    { name: 'w1' },
+    { name: 'w2' },
+    { name: 'w3' },
+    new Error('boom!'),
+    { name: 'w4' },
+    new Error('Another boom!'),
+    { name: 'w5' },
+    { name: 'w6' }
+  ]
+
+  ctx.res = hl(widgets)
+    .map(w => {
+      if (w instanceof Error) {
+        const { message } = w
+        return { error: { message } }
+      } else {
+        return { widget: w }
+      }
+    })
+}
+```
+
+## DUPLEX
+
+We can take the same approach with duplex streams.
+
+gRPC server implementation:
+
+```js
+function syncWidgets (call) {
+  let counter = 0
+  call.on('data', d => {
+    counter++
+    if (d.widget) {
+      console.log('data: %s', d.widget.name)
+      call.write({ widget: { name: d.widget.name.toUpperCase() } })
+    } else if (d.error) {
+      console.error('Error: %s', d.error.message)
+    }
+    if (counter % 4 === 0) {
+      call.write({ error: { message: `Boom ${counter}!` } })
+    }
+  })
+  call.on('end', () => {
+    call.end()
+  })
+}
+```
+
+Client:
+
+```js
+const call = client.syncWidgets()
+
+call.on('data', d => {
+  if (d.widget) {
+    console.log(d.widget)
+  } else if (d.error) {
+    console.log('Data error: %s', d.error.message)
+  }
+})
+
+call.on('error', err => {
+  console.error('Client error: %s', err)
+})
+
+const widgets = [
+  { name: 'w1' },
+  new Error('Client Boom 1'),
+  { name: 'w2' },
+  { name: 'w3' },
+  { name: 'w4' },
+  new Error('Client Boom 2'),
+  { name: 'w5' }
+]
+
+widgets.forEach(w => {
+  if (w instanceof Error) {
+    const { message } = w
+    call.write({ error: { message } })
+  } else {
+    call.write({ widget: w })
+  }
+})
+call.end()
+```
+
+With Mali we can use [mississippi](https://npmjs.com/package/mississippi) stream utility to ietrate over the stream and supply response data. In case of an error we set the `error` property in the payload appropriately.
+
+```js
+async function syncWidgets (ctx) {
+  let counter = 0
+  miss.each(ctx.req, (d, next) => {
+    counter++
+    if (d.widget) {
+      console.log('data: %s', d.widget.name)
+      ctx.res.write({ widget: { name: d.widget.name.toUpperCase() } })
+    } else if (d.error) {
+      console.error('Error: %s', d.error.message)
+    }
+    if (counter % 4 === 0) {
+      ctx.res.write({ error: { message: `Boom ${counter}!` } })
+    }
+    next()
+  }, () => {
+    ctx.res.end()
+  })
+}
+```
