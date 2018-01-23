@@ -1,5 +1,7 @@
 # Mali Examples
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/malijs/examples.svg)](https://greenkeeper.io/)
+
 A repository containing small examples to illustrate the use of Mali for creating gRPC applications.
 
 ## Installation
