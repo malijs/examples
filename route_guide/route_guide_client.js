@@ -36,10 +36,13 @@ var fs = require('fs')
 var parseArgs = require('minimist')
 var path = require('path')
 var _ = require('lodash')
-var grpc = require('grpc')
+const protoLoader = require('@grpc/proto-loader')
+const grpc = require('grpc')
 
 var PROTO_PATH = path.resolve(__dirname, '../protos/route_guide.proto')
-var routeguide = grpc.load(PROTO_PATH).routeguide
+const pd = protoLoader.loadSync(PROTO_PATH)
+const loaded = grpc.loadPackageDefinition(pd)
+var routeguide = loaded.routeguide
 var client = new routeguide.RouteGuide('localhost:50051',
   grpc.credentials.createInsecure())
 

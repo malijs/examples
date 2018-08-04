@@ -1,11 +1,13 @@
 const _ = require('lodash')
+const protoLoader = require('@grpc/proto-loader')
 const grpc = require('grpc')
 const path = require('path')
 
 const PROTO_PATH = path.resolve(__dirname, '../protos/errorexample.proto')
 const HOSTPORT = '0.0.0.0:50051'
 
-const loaded = grpc.load(PROTO_PATH)
+const pd = protoLoader.loadSync(PROTO_PATH)
+const loaded = grpc.loadPackageDefinition(pd)
 const example = loaded.ErrorExample
 
 function listWidgets (call) {

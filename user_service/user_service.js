@@ -1,6 +1,7 @@
 const path = require('path')
 const hl = require('highland')
 const Mali = require('mali')
+const grpc = require('grpc')
 
 const createError = require('create-grpc-error')
 const apikey = require('mali-apikey')
@@ -31,7 +32,8 @@ async function createUser (ctx) {
 }
 
 async function checkAPIKey (key, ctx, next) {
-  if (key !== API_KEY) throw createError('Not Authorized', apiKeyErrorMetadata)
+  const err = createError('Not Authorized', grpc.status.UNAUTHENTICATED, apiKeyErrorMetadata)
+  if (key !== API_KEY) throw err
   await next()
 }
 
@@ -39,7 +41,12 @@ function main () {
   app = new Mali(PROTO_PATH, 'UserService')
 
   app.use(logger())
-  app.use(apikey({ error: { metadata: apiKeyErrorMetadata } }, checkAPIKey))
+  app.use(
+    apikey(
+      { error: { metadata: apiKeyErrorMetadata, code: grpc.status.UNAUTHENTICATED } },
+      checkAPIKey
+    )
+  )
   app.use(toJSON())
 
   app.use({

@@ -1,6 +1,3 @@
-
-
-
 /*
  *
  * Copyright 2015, Google Inc.
@@ -35,23 +32,26 @@
  */
 
 var path = require('path')
-var grpc = require('grpc');
+const protoLoader = require('@grpc/proto-loader')
+const grpc = require('grpc')
 
 const PROTO_PATH = path.resolve(__dirname, '../protos/helloworld.proto')
-var hello_proto = grpc.load(PROTO_PATH).helloworld;
 
-function main() {
-  var client = new hello_proto.Greeter('localhost:50051',
-                                       grpc.credentials.createInsecure());
-  var user;
+const pd = protoLoader.loadSync(PROTO_PATH)
+const loaded = grpc.loadPackageDefinition(pd)
+const hello_proto = loaded.helloworld
+
+function main () {
+  var client = new hello_proto.Greeter('localhost:50051', grpc.credentials.createInsecure())
+  var user
   if (process.argv.length >= 3) {
-    user = process.argv[2];
+    user = process.argv[2]
   } else {
-    user = 'world';
+    user = 'world'
   }
-  client.sayHello({name: user}, function(err, response) {
-    console.log('Greeting:', response.message);
-  });
+  client.sayHello({ name: user }, function (err, response) {
+    console.log('Greeting:', response.message)
+  })
 }
 
-main();
+main()

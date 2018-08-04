@@ -1,11 +1,13 @@
 const path = require('path')
 const async = require('async')
+const protoLoader = require('@grpc/proto-loader')
 const grpc = require('grpc')
 
 const PROTO_PATH = path.resolve(__dirname, '../protos/errorexample.proto')
 const HOSTPORT = '0.0.0.0:50051'
 
-const loaded = grpc.load(PROTO_PATH)
+const pd = protoLoader.loadSync(PROTO_PATH)
+const loaded = grpc.loadPackageDefinition(pd)
 const client = new loaded.ErrorExample.SampleService(HOSTPORT, grpc.credentials.createInsecure())
 
 function getWidgetOK (fn) {
@@ -65,11 +67,7 @@ function createWidgets (fn) {
     console.log(res)
   })
 
-  const widgets = [
-    { name: 'w1' },
-    { name: 'w2' },
-    { name: 'w3' }
-  ]
+  const widgets = [{ name: 'w1' }, { name: 'w2' }, { name: 'w3' }]
 
   widgets.forEach(w => call.write(w))
   call.end()
@@ -85,12 +83,7 @@ function createWidgetsError (fn) {
     console.log(res)
   })
 
-  const widgets = [
-    { name: 'w1' },
-    { name: 'w2' },
-    { name: 'w3' },
-    { name: 'w4' }
-  ]
+  const widgets = [{ name: 'w1' }, { name: 'w2' }, { name: 'w3' }, { name: 'w4' }]
 
   widgets.forEach(w => call.write(w))
   call.end()
@@ -108,11 +101,7 @@ function syncWidgets (fn) {
   call.on('error', err => {
     console.error('Client error: %s', err)
   })
-  const widgets = [
-    { name: 'w1' },
-    { name: 'w2' },
-    { name: 'w3' }
-  ]
+  const widgets = [{ name: 'w1' }, { name: 'w2' }, { name: 'w3' }]
 
   widgets.forEach(w => call.write({ widget: w }))
   call.end()
@@ -154,18 +143,21 @@ function syncWidgetsError (fn) {
 }
 
 function main () {
-  async.series([
-    getWidgetOK,
-    getWidgetError,
-    listWidgets,
-    listWidgetsError,
-    createWidgets,
-    createWidgetsError,
-    syncWidgets,
-    syncWidgetsError
-  ], () => {
-    console.log('done!')
-  })
+  async.series(
+    [
+      getWidgetOK,
+      getWidgetError,
+      listWidgets,
+      listWidgetsError,
+      createWidgets,
+      createWidgetsError,
+      syncWidgets,
+      syncWidgetsError
+    ],
+    () => {
+      console.log('done!')
+    }
+  )
 }
 
 main()
