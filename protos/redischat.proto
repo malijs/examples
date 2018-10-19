@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package redischat;
+
+service RedisChat {
+  rpc Scan (ChatRequest) returns (stream ChatResponse) {}
+}
+
+message ChatRequest {
+  string key = 1;
+}
+
+message ChatResponse {
+    string key = 1;
+}
