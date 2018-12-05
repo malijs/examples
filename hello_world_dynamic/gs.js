@@ -53,7 +53,8 @@ async function sayHelloCs (ctx) {
       .toCallback((err, result) => {
         if (err) return reject(err)
         console.log(`done sayHelloCs counter ${counter}`)
-        resolve({ message: 'Hello ' + counter })
+        ctx.response.res = { message: 'Hello ' + counter }
+        resolve()
       })
   })
 }
