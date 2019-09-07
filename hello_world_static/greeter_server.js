@@ -19,7 +19,7 @@ function sayHello (ctx) {
  * sample server port
  */
 function main () {
-  const app = new Mali(services, 'GreeterService')
+  const app = new Mali(services, 'Greeter')
   app.use({ sayHello })
   app.start(HOSTPORT)
   console.log(`Greeter service running @ ${HOSTPORT}`)

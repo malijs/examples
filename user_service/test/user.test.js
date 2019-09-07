@@ -13,7 +13,7 @@ const client = caller(HOSTPORT, PROTO_PATH, 'UserService')
 
 test('fail with wrong auth info', async t => {
   t.plan(5)
-  const err = await t.throws(client.getUser({ id: '1d78202b-23cf-4d1e-92ac-2d2f76278a7d' }, { apikey: '654321' }))
+  const err = await t.throwsAsync(client.getUser({ id: '1d78202b-23cf-4d1e-92ac-2d2f76278a7d' }, { apikey: '654321' }))
   t.truthy(err)
   t.is(err.message, '16 UNAUTHENTICATED: Not Authorized')
   const md = err.metadata.getMap()
@@ -23,7 +23,7 @@ test('fail with wrong auth info', async t => {
 
 test('fail with wrong api key', async t => {
   t.plan(5)
-  const err = await t.throws(client.getUser({ id: '1d78202b-23cf-4d1e-92ac-2d2f76278a7d' }, { Authorization: 'apikey 654322' }))
+  const err = await t.throwsAsync(client.getUser({ id: '1d78202b-23cf-4d1e-92ac-2d2f76278a7d' }, { Authorization: 'apikey 654322' }))
   t.truthy(err)
   t.is(err.message, '16 UNAUTHENTICATED: Not Authorized')
   const md = err.metadata.getMap()
